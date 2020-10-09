@@ -13,7 +13,7 @@ export default createGlobalStyle`
     -webkit-font-smomothig:antialiased;
   }
   body,input,button{
-    font: 16px Roboto, sans-serif;
+    font: 16px Roboto, sans-serif ;
   }
   #root{
     max-width:960px;

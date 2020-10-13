@@ -31,6 +31,7 @@ export const Form = styled.form<FormProps>`
       css`
         border-color: #c53030;
       `}
+
     &::placeholder {
       color: #a8a8b3;
     }
@@ -43,6 +44,7 @@ export const Form = styled.form<FormProps>`
     border: 0;
     transition: background-color 0.2s;
 
+    color: #3a3a3a;
     &:hover {
       background: ${shade(
         0.2,
@@ -107,5 +109,6 @@ export const Repositories = styled.div`
 export const Error = styled.span`
   display: block;
   color: #c53030;
+  font: bold;
   margin-top: 30px;
 `;

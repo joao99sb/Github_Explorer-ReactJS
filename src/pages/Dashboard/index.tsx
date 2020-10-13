@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { FiChevronRight } from 'react-icons/fi';
 import { Title, Form, Repositories, Error } from './styles';
 import logoImg from '../../assets/logo.svg';
@@ -15,9 +16,29 @@ interface Repository {
 }
 
 const Dashboard: React.FC = () => {
-  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>(() => {
+    const storagedRepositorie = localStorage.getItem(
+      '@GithubExplorer:repositories',
+    );
+    if (storagedRepositorie) {
+      return JSON.parse(storagedRepositorie);
+    }
+    return [];
+  });
   const [inputError, setInputError] = useState('');
   const [newRepo, setNewRepo] = useState('');
+
+  useEffect(
+    () => {
+      localStorage.setItem(
+        '@GithubExplorer:repositories',
+        JSON.stringify(repositories),
+      );
+    },
+    [
+      repositories,
+    ] /** a funcao é disparada sempre que  oseg undo parametro for modificado */,
+  );
 
   async function handleAddRepository(
     event: FormEvent<HTMLFormElement>,
@@ -58,14 +79,14 @@ const Dashboard: React.FC = () => {
 
       <Repositories>
         {repositories.map((repo) => (
-          <a key={repo.full_name} href="teste">
+          <Link key={repo.full_name} to={`/repositories/${repo.full_name}`}>
             <img src={repo.owner.avatar_url} alt={repo.owner.login} />
             <div>
               <strong>{repo.full_name}</strong>
               <p>{repo.description}</p>
             </div>
             <FiChevronRight size={20} />
-          </a>
+          </Link>
         ))}
       </Repositories>
     </>
